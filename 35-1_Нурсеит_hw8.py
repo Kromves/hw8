@@ -20,18 +20,20 @@ while True:
         break
 
     # Поиск сотрудников и отображение информации
-    cursor.execute("""
-            SELECT first_name, last_name
-            FROM employees
-            WHERE city_id = ?
-        """, (city_id,))
+   SELECT first_name, last_name,c.title, co.title
+            FROM employees as e, cities as c, countries as co
+        WHERE e.city_id = c.id AND c.country_id = co.id AND c.id = ?
+    """, (city_id,))
 
     employees = cursor.fetchall()
 
     if employees:
         print("\nСотрудники в выбранном городе:")
         for employee in employees:
-            print(f"{employee[0]} {employee[1]}")
+           print(f"Имя: {employee[0]}")
+            print(f"Фамилия: {employee[1]}")
+            print(f"Город: {employee[2]}")
+            print(f"Страна: {employee[3]}\n")
     else:
         print("Сотрудники в этом городе отсутствуют.")
 
